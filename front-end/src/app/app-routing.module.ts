@@ -1,24 +1,40 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './modules/home/home.component';
+import {NgModule} from '@angular/core';
+import {Routes, RouterModule} from '@angular/router';
+import {HomeComponent} from './modules/home/home.component';
+import {PagesComponent} from './modules/pages/pages.component';
+import {AuthGuard} from './shared/guards/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/home',
-    pathMatch: 'full'
+    component: PagesComponent,
+    data: {breadcrumb: 'Painel'},
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'home',
+      },
+      {
+        path: 'home',
+        data: {breadcrumb: 'Home'},
+        component: HomeComponent
+      },
+      {
+        path: 'region',
+        data: {breadcrumb: 'Regiões'},
+        loadChildren: () => import('./modules/region/region.module').then(m => m.RegionModule)
+      }
+    ],
   },
   {
-    path: 'home',
-    component: HomeComponent
+    path: 'auth',
+    loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule)
   },
   {
-    path: 'regiao',
-    loadChildren: () => import('./modules/regiao/regiao.module').then(m => m.RegiaoModule)
-  },
-  { 
-    path: '**', 
-    redirectTo: '/home' 
+    path: '**',
+    redirectTo: '/home'
   }
 ];
 
@@ -26,4 +42,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

@@ -1,0 +1,31 @@
+<div class="flex items-center justify-between">
+  <p-button label="Filtrar" icon="bx bx-filter" styleClass="button-theme"></p-button>
+  <p-button label="Nova Região" icon="bx bx-plus" styleClass="button-theme" routerLink="new" ></p-button>
+</div>
+
+<p-table [value]="regions"
+         [paginator]="true" [totalRecords]="totalRecords"
+         styleClass="p-datatable-striped mt-3"
+         [(first)]="first" [rows]="pageSize" [responsive]="true">
+  <ng-template pTemplate="header">
+    <tr>
+      <th style="width: 5rem" class="text-center">#</th>
+      <th class="text-center">Nome da Região</th>
+      <th style="width: 10rem" class="text-center">Cidades</th>
+      <th style="width: 5rem" class="text-center">
+        <i class="bx bx-cog"></i>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-i="rowIndex" let-region>
+    <tr>
+      <td class="text-center">{{ i + 1 }}</td>
+      <td>{{ region.name }}</td>
+      <td class="text-center">{{ i }}</td>
+      <td>
+<!--        <p-tieredMenu #menu [model]="items" [popup]="true"></p-tieredMenu>-->
+<!--        <button #btn type="button" pButton icon="pi pi-fw pi-list" label="Show" (click)="menu.toggle($event)"></button>-->
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
