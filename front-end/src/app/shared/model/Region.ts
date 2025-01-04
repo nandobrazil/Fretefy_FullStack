@@ -1,10 +1,9 @@
+import {City} from './City';
+
 export type Region = {
   id: number;
-  name: string;
-  userCreated: string;
-  userUpdated: string;
-  dateCreated: string;
-  dateUpdated: string;
+  nome: string;
+  cidades: City[];
 };
 
-export type RegionResponse = Pick<Region, 'id' | 'name'>;
+export type RegionResponse = Region;

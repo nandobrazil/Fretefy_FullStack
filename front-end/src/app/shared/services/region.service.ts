@@ -9,11 +9,19 @@ export class RegionService extends BaseService {
   constructor(
     @Inject(Injector) injector: Injector
   ) {
-    super('region', injector);
+    super('regiao', injector);
   }
 
-  GetAll(): Observable<IHttpResult<any>> {
-    return this.http.get<IHttpResult<any>>(`${this.urlBase}`);
+  GetAll(): Observable<any> {
+    return this.http.get<any>(`${this.urlBase}`);
+  }
+
+  Post(data: any): Observable<any> {
+    return this.http.post<any>(`${this.urlBase}`, data);
+  }
+
+  Put(data: any): Observable<any> {
+    return this.http.post<any>(`${this.urlBase}/${data.id}`, data);
   }
 
 }

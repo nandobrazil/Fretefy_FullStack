@@ -8,6 +8,7 @@ import {ButtonModule} from 'primeng/button';
 import {InputTextModule} from 'primeng/inputtext';
 import {ReactiveFormsModule} from '@angular/forms';
 import {DropdownModule} from 'primeng/dropdown';
+import {TooltipModule} from 'primeng/tooltip';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import {DropdownModule} from 'primeng/dropdown';
     TableModule,
     ButtonModule,
     InputTextModule,
-    DropdownModule
+    DropdownModule,
+    TooltipModule
   ],
   declarations: [RegionComponent, RegionsComponent],
   exports: [RegionComponent]

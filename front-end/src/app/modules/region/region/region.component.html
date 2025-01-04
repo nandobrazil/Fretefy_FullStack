@@ -9,11 +9,13 @@
       </div>
       <h4 class="col-12">Locais da região</h4>
       <div class="col-12 md:col-10">
-        <p-dropdown [options]="cityOptions" formControlName="city" optionLabel="name" placeholder="Selecione a cidade"
-                    [style]="{'width':'100%'}"></p-dropdown>
+        <p-dropdown [options]="cityOptions" formControlName="city" placeholder="Selecione a cidade"
+                    [style]="{'width':'100%'}" [filter]="true" [showClear]="true"
+                    emptyFilterMessage="Nenhuma cidade encontrada"
+        ></p-dropdown>
       </div>
       <div class="col-12 md:col-2">
-        <p-button label="Adicionar" icon="bx bx-plus" styleClass="button-theme"></p-button>
+        <p-button label="Adicionar" icon="bx bx-plus" (click)="addCity()" styleClass="button-theme"></p-button>
       </div>
 
       <div class="col-12">
@@ -31,11 +33,12 @@
           <ng-template pTemplate="body" let-i="rowIndex" let-city>
             <tr>
               <td class="text-center">{{ i + 1 }}</td>
-              <td>{{ city.name }}</td>
-              <td class="text-center">{{ i }}</td>
+              <td>{{ city.nome }}</td>
+              <td class="text-center">{{ city.uf }}</td>
               <td>
-                <!--        <p-tieredMenu #menu [model]="items" [popup]="true"></p-tieredMenu>-->
-                <!--        <button #btn type="button" pButton icon="pi pi-fw pi-list" label="Show" (click)="menu.toggle($event)"></button>-->
+                <button type="button" pButton icon="bx bx-trash" pTooltip="Remover"
+                        class="p-button-rounded p-button-danger p-button-icon-only p-button-outlined"
+                        (click)="removeCity(city)"></button>
               </td>
             </tr>
           </ng-template>
@@ -44,7 +47,7 @@
     </div>
   </form>
   <div class="flex items-center justify-between mt-4">
-    <p-button label="Cancelar" icon="bx bx-left-arrow-alt" routerLink="/region" styleClass="p-button-danger"></p-button>
-    <p-button label="Salvar" icon="bx bx-save" styleClass="button-theme"></p-button>
+    <p-button label="Cancelar" (click)="cancel()" icon="bx bx-left-arrow-alt" styleClass="p-button-danger"></p-button>
+    <p-button label="Salvar" (click)="save()" icon="bx bx-save" styleClass="button-theme"></p-button>
   </div>
 </div>

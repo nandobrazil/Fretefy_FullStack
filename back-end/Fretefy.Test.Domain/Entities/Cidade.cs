@@ -9,11 +9,12 @@ namespace Fretefy.Test.Domain.Entities
         
         }
 
-        public Cidade(string nome, string uf)
+        public Cidade(string nome, string uf, Guid? regiaoId = null)
         {
             Id = Guid.NewGuid();
             Nome = nome;
             UF = uf;
+            RegiaoId = regiaoId;
         }
 
         public Guid Id { get; set; }
@@ -21,5 +22,9 @@ namespace Fretefy.Test.Domain.Entities
         public string Nome { get; set; }
 
         public string UF { get; set; }
+        
+        public Guid? RegiaoId { get; set; }
+        
+        public Regiao Regiao { get; set; }
     }
 }

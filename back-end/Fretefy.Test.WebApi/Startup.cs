@@ -33,11 +33,13 @@ namespace Fretefy.Test.WebApi
         private void ConfigureDomainService(IServiceCollection services)
         {
             services.AddScoped<ICidadeService, CidadeService>();
+            services.AddScoped<IRegiaoService, RegiaoService>();
         }
 
         private void ConfigureInfraService(IServiceCollection services)
         {
             services.AddScoped<ICidadeRepository, CidadeRepository>();
+            services.AddScoped<IRegiaoRepository, RegiaoRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -46,6 +48,13 @@ namespace Fretefy.Test.WebApi
             {
                 app.UseDeveloperExceptionPage();
             }
+            
+            app.UseCors(c =>
+            {
+                c.WithOrigins("http://localhost:4200");
+                c.AllowAnyMethod();
+                c.AllowAnyHeader();
+            });
 
             app.UseRouting();
 
@@ -53,6 +62,8 @@ namespace Fretefy.Test.WebApi
             {
                 endpoints.MapControllers();
             });
+            
+            
         }
     }
 }

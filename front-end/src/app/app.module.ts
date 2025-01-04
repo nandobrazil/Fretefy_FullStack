@@ -12,6 +12,9 @@ import {LoadingComponent} from './layout/loading/loading.component';
 import {BreadcrumbComponent} from './layout/breadcrumb/breadcrumb.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientModule} from '@angular/common/http';
+import {ConfirmationService, MessageService} from 'primeng/api';
+import {ToastModule} from 'primeng/toast';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
 
 
 @NgModule({
@@ -30,10 +33,14 @@ import {HttpClientModule} from '@angular/common/http';
 
     HomeModule,
 
-    AppRoutingModule
+    AppRoutingModule,
+    ToastModule,
+    ConfirmDialogModule
   ],
   providers: [
     {provide: LocationStrategy, useClass: HashLocationStrategy},
+    MessageService,
+    ConfirmationService
   ],
   bootstrap: [AppComponent]
 })
