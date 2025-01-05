@@ -1,11 +1,17 @@
 <div class="card">
   <form [formGroup]="form">
     <div class="grid p-fluid">
-      <div class="col-12">
-      <span class="p-float-label">
-        <input id="float-input" formControlName="name" class="p-inputtext-lg" type="text" pInputText>
-        <label for="float-input">Nome da Região</label>
-      </span>
+      <div class="col">
+        <span class="p-float-label">
+          <input id="float-input" formControlName="nome" type="text" pInputText>
+          <label for="float-input">Nome da Região</label>
+        </span>
+      </div>
+      <div class="col-fixed">
+        <div class="flex align-items-center">
+          <p-inputSwitch formControlName="active" id="active" inputId="active" ></p-inputSwitch>
+          <label for="active" class="ml-2">{{ form.get('active').value ? 'Ativo' : 'Inativo' }}</label>
+        </div>
       </div>
       <h4 class="col-12">Locais da região</h4>
       <div class="col-12 md:col-10">

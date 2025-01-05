@@ -7,6 +7,9 @@ namespace Fretefy.Test.Domain.Interfaces.Repositories
     public interface IRegiaoRepository
     {
         IQueryable<Regiao> List();
-        Regiao Post(Regiao regiao);
+        
+        Regiao Create(Regiao regiao);
+        
+        Regiao Update(Regiao regiao);
     }
 }

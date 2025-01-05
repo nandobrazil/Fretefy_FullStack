@@ -3,6 +3,7 @@ using Fretefy.Test.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using Fretefy.Test.Domain.DTOs;
 
 namespace Fretefy.Test.WebApi.Controllers
 {
@@ -10,33 +11,47 @@ namespace Fretefy.Test.WebApi.Controllers
     [ApiController]
     public class RegiaoController : ControllerBase
     {
-        private readonly ICidadeService _cidadeService;
+        private readonly IRegiaoService _regiaoService;
 
-        public RegiaoController(ICidadeService cidadeService)
+        public RegiaoController(IRegiaoService regiaoService)
         {
-            _cidadeService = cidadeService;
+            _regiaoService = regiaoService;
         }
 
         [HttpGet]
-        public IActionResult List([FromQuery] string uf, [FromQuery] string terms)
+        public IActionResult List()
         {
-            IEnumerable<Cidade> cidades;
+            IEnumerable<RegiaoResponseDTO> regioes = _regiaoService.List();
 
-            if (!string.IsNullOrEmpty(terms))
-                cidades = _cidadeService.Query(terms);
-            else if (!string.IsNullOrEmpty(uf))
-                cidades = _cidadeService.ListByUf(uf);
-            else
-                cidades = _cidadeService.List();
-
-            return Ok(cidades);
+            return Ok(regioes);
         }
 
         [HttpGet("{id}")]
         public IActionResult Get(Guid id)
         {
-            var cidades = _cidadeService.Get(id);
-            return Ok(cidades);
+            var regioes = _regiaoService.Get(id);
+            return Ok(regioes);
+        }
+        
+        [HttpPost]
+        public IActionResult Create([FromBody] RegiaoCreateDTO dto)
+        {
+            _regiaoService.Create(dto);
+            return Ok();
+        }
+        
+        [HttpPut("{id}")]
+        public IActionResult Update(Guid id, [FromBody] RegiaoCreateDTO dto)
+        {
+            _regiaoService.Update(id, dto);
+            return Ok();
+        }
+                
+        [HttpPatch("mudar-status/{id}")]
+        public IActionResult ChangeStatus(Guid id)
+        {
+            _regiaoService.ChangeStatus(id);
+            return Ok();
         }
     }
 }

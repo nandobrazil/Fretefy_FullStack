@@ -32,17 +32,30 @@ export class RegionComponent implements OnInit {
     this.form = this.formBuilder.group({
       id: [null],
       city: [null],
-      name: [null, [Validators.required, Validators.minLength]],
-      cities: [null, Validators.required]
+      active: [true],
+      nome: [null, [Validators.required, Validators.minLength]],
+      cidades: [null, Validators.required]
     });
 
     this.cityService.GetAll().subscribe(cities => {
-      this.cityOptions = cities.map(city => {
+      this.cityOptions = cities
+      .filter(city => !city.regiaoId)
+        .map(city => {
         return {
           label: `${city.nome} - ${city.uf}`,
           value: city
         };
       });
+    });
+
+    this.activatedRoute.params.subscribe(params => {
+      const id = params.id;
+      if (id) {
+        this.regionService.GetById(id).subscribe(region => {
+          this.form.patchValue(region);
+          this.cities = region.cidades;
+        });
+      }
     });
   }
 
@@ -59,7 +72,7 @@ export class RegionComponent implements OnInit {
     }
     this.form.get('city').reset();
     this.cities.push(city);
-    this.form.get('cities').setValue(this.cities);
+    this.form.get('cidades').setValue(this.cities);
   }
 
   removeCity(city: City): void {
@@ -74,7 +87,7 @@ export class RegionComponent implements OnInit {
       icon: 'bx bx-info-circle',
       accept: () => {
         this.cities = this.cities.filter(c => c.id !== city.id);
-        this.form.get('cities').setValue(this.cities);
+        this.form.get('cidades').setValue(this.cities);
       },
     });
   }
@@ -88,13 +101,11 @@ export class RegionComponent implements OnInit {
     const { value } = this.form;
     const region = {
       id: value?.id || undefined,
-      nome: value.name,
-      cidades: value.cities
+      nome: value.nome,
+      active: true,
+      cidades: value.cidades?.map((city: City) => city.id)
     };
 
-    console.log(region);
-
-    return;
     if (region.id) {
       this.regionService.Put(region).subscribe(_ => {
         this.messageService.add({severity: 'success', summary: 'Sucesso', detail: 'Registro atualizado com sucesso'});

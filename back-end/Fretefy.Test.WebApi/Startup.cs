@@ -5,8 +5,6 @@ using Fretefy.Test.Infra.EntityFramework;
 using Fretefy.Test.Infra.EntityFramework.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -22,6 +20,7 @@ namespace Fretefy.Test.WebApi
             {
                 options.UseSqlite("Data Source=Data\\Test.db");
             });
+            
 
             ConfigureInfraService(services);
             ConfigureDomainService(services);
@@ -41,7 +40,7 @@ namespace Fretefy.Test.WebApi
             services.AddScoped<ICidadeRepository, CidadeRepository>();
             services.AddScoped<IRegiaoRepository, RegiaoRepository>();
         }
-
+        
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())

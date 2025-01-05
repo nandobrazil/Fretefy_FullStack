@@ -8,10 +8,12 @@ namespace Fretefy.Test.Infra.EntityFramework.Repositories
 {
     public class RegiaoRepository : IRegiaoRepository
     {
+        private readonly DbContext _dbContext;
         private DbSet<Regiao> _dbSet;
 
         public RegiaoRepository(DbContext dbContext)
         {
+            _dbContext = dbContext;
             _dbSet = dbContext.Set<Regiao>();
         }
 
@@ -20,11 +22,19 @@ namespace Fretefy.Test.Infra.EntityFramework.Repositories
             return _dbSet.AsQueryable();
         }
         
-        public Regiao Post(Regiao regiao)
+        public Regiao Create(Regiao regiao)
         {
-            _dbSet.Add(regiao);
-            return regiao;
+            var reg = _dbSet.Add(regiao);
+            _dbContext.SaveChanges();
+            return reg.Entity;
         }
-        
+
+        public Regiao Update(Regiao regiao)
+        {
+            var reg = _dbSet.Update(regiao);
+            _dbContext.SaveChanges();
+            return reg.Entity;
+        }
+
     }
 }
